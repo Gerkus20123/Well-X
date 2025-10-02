@@ -4,7 +4,7 @@ Well-X to nowoczesna aplikacja webowa zaprojektowana w Angularze, skupiająca si
 🚀 Funkcje
 Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
 
-1. Rejestrowanie Przerw (Timer)
+# 1. Rejestrowanie Przerw (Timer)
   * 5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
   
   * Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia.
