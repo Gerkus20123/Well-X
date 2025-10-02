@@ -11,11 +11,11 @@ import { DailyActivity, WellBeingDataService } from '../../../../core/services/w
       <div *ngIf="(historicalData$ | async) as data; else loading">
         <h4 class="font-medium mb-2 text-left ml-3">Ostatnie 5 Dni:</h4>
 
-        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:ml-20 lg:ml-0">
           <li *ngFor="let day of data.slice(-5)" class="py-2 flex items-center space-x-2 mr-4">
             <span class="material-icons text-green-600 p-3">directions_walk</span>
             <div class="flex-1">
-              <div class="font-medium text-center">{{ day.date }}</div>
+              <div class="font-medium text-left -mr-4">{{ day.date }}</div>
               <div class="text-sm text-gray-600 text-left">Kroki: {{ day.steps | number }}</div> 
               <div class="text-sm text-gray-600 text-left"> Przerwy: {{ day.breaks }}</div>
             </div>
