@@ -65,7 +65,8 @@ Najważniejszą logiką w tym komponencie jest funkcja calculateTimeAgo:
 
 4. Używa setInterval(..., 60000) w ngOnInit, aby wymusić ponowne obliczenie i odświeżenie wyświetlania "X minut temu" co minutę.
 
-##🔌 Uruchumenie ##
+## 🔌 Uruchumenie ## 
+
 Aby uruchumić aplikację przejdź do katalogu głównego i w terminale wprowadź komendę:
 
 ```bash
