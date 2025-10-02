@@ -17,14 +17,14 @@ interface Note {
   imports: [CommonModule, FormsModule, NoteModalComponent],
   template: `
     <!-- Główny kontener zegara i notatek -->
-    <div class="shadow-xl rounded-lg border border-gray-200 relative h-[500px] bg-white p-5 flex flex-col">
+    <div class="shadow-xl rounded-lg border border-gray-200 relative bg-white p-7 flex flex-col">
 
       <!-- GÓRNA SEKCJA: Zegar i wybór daty -->
-      <div class="flex justify-between items-start gap-4 mb-4 border-b pb-3"> 
+      <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4 border-b pb-3"> 
 
         <!-- BLOK ZEGARA (Mniejszy) -->
-        <div class="text-left">
-            <div class="text-xl font-mono font-extrabold text-gray-800">
+        <div class="text-left order-2 sm:order-1 mt-3 sm:mt-0">
+            <div class="text-3xl sm:text-xl font-mono font-extrabold text-gray-800">
              {{ currentTime | date:'HH:mm:ss' }}
             </div>
             <div class="text-sm font-mono text-gray-500">
@@ -33,14 +33,14 @@ interface Note {
         </div>
  
         <!-- BLOK WYBORU DATY (Natywny Input Date) -->
-        <div class="text-right w-1/4 min-w-[200px]">
-            <label for="date-picker" class="block text-xs font-medium text-gray-700 mb-2 text-center">Wybierz Datę Notatki</label>
+        <div class="w-full sm:w-1/4 order-1 sm:order-2">
+            <label for="date-picker" class="block text-xs font-medium text-gray-700 mb-2 sm:text-center">Wybierz Datę Notatki</label>
             <input 
                 id="date-picker"
                 type="date"
                 [ngModel]="selectedDate | date:'yyyy-MM-dd'"
                 (ngModelChange)="onDateSelected($event)"
-                class="mt-1 mb-1 block w-full rounded-md border-gray-300 shadow-md focus:border-red-500 focus:ring-red-500 text-sm p-2"
+                class="mt-1 mb-1 block w-full rounded-md border-gray-300 shadow-md focus:border-red-500 focus:ring-red-500 text-xs p-1"
             >
         </div>
         
@@ -63,7 +63,7 @@ interface Note {
         <ng-container *ngIf="currentNotes.length > 0; else noNotes">
             <div class="space-y-3">
                 @for (note of currentNotes; track note.id) {
-                    <div class="p-4 bg-gray-50 border border-gray-300 rounded-lg shadow-sm grid grid-cols-[1fr_auto] gap-x-4 items-center">
+                    <div class="p-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm flex flex-col sm:grid sm:grid-cols-[1fr_auto] gap-x-4 gap-x-4 sm:items-center">
 
                         <!-- KOLUMNA 1: TYTUŁ - KLIKNIĘCIE OTWIERA W TRYBIE TYLKO DO ODCZYTU -->
                         <p (click)="openViewModal(note)"

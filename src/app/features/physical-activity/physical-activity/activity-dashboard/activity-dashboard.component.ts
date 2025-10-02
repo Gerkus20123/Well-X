@@ -6,12 +6,12 @@ import { DailyActivity, WellBeingDataService } from '../../../../core/services/w
   selector: 'app-activity-dashboard',
   standalone: false,
   template: `
-  <h2 class="text-2xl font-bold text-black mb-4 text-left header-gradient-border rounded-lg p-5 w-2/3 mx-auto">Twoje Osiągnięcia Aktywności</h2>
-    <div class="bg-white rounded-lg shadow-lg p-10 w-2/3 mx-auto">
+  <h2 class="text-2xl font-bold text-black mb-4 text-left header-gradient-border rounded-lg p-5 w-full max-w-4xl mx-auto">Twoje Osiągnięcia Aktywności</h2>
+    <div class="bg-white rounded-lg shadow-xl p-4 sm:p-10 w-full max-w-4xl mx-auto">
       <div *ngIf="(historicalData$ | async) as data; else loading">
         <h4 class="font-medium mb-2 text-left ml-3">Ostatnie 5 Dni:</h4>
 
-        <ul class="flex divide-x items-center justify-center">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <li *ngFor="let day of data.slice(-5)" class="py-2 flex items-center space-x-2 mr-4">
             <span class="material-icons text-green-600 p-3">directions_walk</span>
             <div class="flex-1">

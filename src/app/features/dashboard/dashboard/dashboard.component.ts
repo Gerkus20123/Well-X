@@ -8,45 +8,47 @@ import { map } from 'rxjs';
   selector: 'app-dashboard',
   standalone: false,
   template: `
-    <h2 class="text-2xl font-bold text-black mb-4 text-left header-gradient-border rounded-lg p-5">Pulpit: Well-X </h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2">
-      <div> 
-        <h2 class="text-xl font-bold bg-gray-300 text-black mb-4 text-center rounded-lg p-2 ml-0">Statystyki </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-200 rounded-lg ml-0 ">
-
-          <div class="shadow-lg p-4 text-center bg-white rounded-lg">
-            <span class="material-icons text-indigo-600 mb-2 text-4xl">trending_up</span>
-            <h3 class="text-xl font-semibold">Całkowite Przerwy</h3>
-            <p class="text-3xl font-bold text-indigo-700">{{ totalBreaks }}</p>
-            <p class="text-sm text-gray-500">Zarejestrowane dzisiaj</p>
-          </div>
-
-          <div class="shadow-lg p-4 text-center bg-white rounded-lg">
-            <span class="material-icons text-green-600 mb-2 text-4xl">directions_run</span>
-            <h3 class="text-xl font-semibold">Kroki Dzisiaj</h3>
-            <p class="text-3xl font-bold text-green-700">{{ todaySteps }}</p>
-            <p class="text-sm text-gray-500">Ostatnia aktualizacja</p>
-          </div>
-
-          <div class="shadow-lg p-4 text-center bg-white rounded-lg">
-            <span class="material-icons text-yellow-600 mb-2 text-4xl">hourglass_empty</span>
-            <h3 class="text-xl font-semibold">Ostatnia Przerwa</h3>
-            <!-- ZMIANA: Wyświetlanie obliczonego czasu "minut temu" -->
-            <p class="text-xl font-bold text-yellow-700">{{ lastBreakDisplay || 'Brak przerw dziś' }}</p>
-            <p class="text-sm text-gray-500">Pamiętaj o regularnej regeneracji</p>
-          </div>
-
-        </div>
-      </div>
+    <div class="p-4 sm:p-6 lg:p-8 space-y-8">
+      
+      <h2 class="text-2xl font-bold text-black text-left header-gradient-border rounded-lg p-5 bg-white shadow-md">Pulpit: Well-X</h2>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-      <div>
-        <div class="lg:col-span-1 ml-20">
-            <app-clock></app-clock>
-        </div>
-      </div>
+        <div class="lg:col-span-2 space-y-4"> 
+          <h2 class="text-xl font-bold bg-gray-100 text-black text-center rounded-lg p-3">Statystyki Dzisiejszej Aktywności</h2>
 
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+            <div class="shadow-xl p-4 text-center bg-white rounded-xl border border-indigo-100 transform hover:scale-[1.02] transition duration-300">
+              <span class="material-icons text-indigo-600 mb-2 text-4xl">check_circle</span>
+              <h3 class="text-lg font-semibold text-gray-700">Całkowite Przerwy</h3>
+              <p class="text-4xl font-extrabold text-indigo-700 mt-1">{{ totalBreaks }}</p>
+              <p class="text-sm text-gray-500 mt-1">Zarejestrowane dzisiaj</p>
+            </div>
+
+            <div class="shadow-xl p-4 text-center bg-white rounded-xl border border-green-100 transform hover:scale-[1.02] transition duration-300">
+              <span class="material-icons text-green-600 mb-2 text-4xl">directions_run</span>
+              <h3 class="text-lg font-semibold text-gray-700">Kroki Dzisiaj</h3>
+              <p class="text-4xl font-extrabold text-green-700 mt-1">{{ todaySteps }}</p>
+              <p class="text-sm text-gray-500 mt-1">Ostatnia aktualizacja</p>
+            </div>
+
+            <div class="shadow-xl p-4 text-center bg-white rounded-xl border border-yellow-100 transform hover:scale-[1.02] transition duration-300">
+              <span class="material-icons text-yellow-600 mb-2 text-4xl">hourglass_empty</span>
+              <h3 class="text-lg font-semibold text-gray-700">Ostatnia Przerwa</h3>
+              <p class="text-xl font-bold text-yellow-700 mt-1">{{ lastBreakDisplay || 'Brak przerw dziś' }}</p>
+              <p class="text-sm text-gray-500 mt-1">Pamiętaj o regeneracji</p>
+            </div>
+
+          </div>
+        </div>
+        
+        <div class="lg:col-span-1">
+          <app-clock></app-clock>
+        </div>
+
+      </div>
     </div>
   `,
 })

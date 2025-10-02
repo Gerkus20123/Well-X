@@ -7,36 +7,36 @@ import { WellBeingDataService } from '../../../core/services/well-being-data.ser
   template: `
   <h2 class="text-2xl font-bold text-black mb-4 text-left 
              from-gray-200 to-gray-50 
-             rounded-lg p-5 w-2/3 mx-auto 
+             rounded-lg p-5 w-full max-w-xl mx-auto 
              header-gradient-border">
     Zegar Przerwy / Mindfulness
   </h2>
   
-    <div class="shadow-xl rounded-lg border border-gray-200 bg-white w-2/3 mx-auto">
+    <div class="shadow-xl rounded-lg border border-gray-200 bg-white w-full max-w-xl mx-auto">
       <div class="text-white p-4 rounded-t-lg">
       </div>
       <div class="p-6 space-y-10">
         <div class="text-6xl font-mono text-center">{{ remainingTime | date:'mm:ss' }}</div>
 
-      <div class="h-5 w-3/4 mx-auto bg-gray-200 rounded">
+      <div class="h-5 mx-4 mx-auto bg-gray-200 rounded">
         <div class="h-5 transition duration-300 bg-gradient-to-r from-orange-400 to-orange-300 rounded" [style.width.%]="progressPercent"></div>
       </div>
 
         <p *ngIf="isRunning" class="text-gray-700 text-center">Czas na relaks! Po zakończeniu przerwa zostanie zarejestrowana.</p>
         <p *ngIf="!isRunning && remainingTime === breakDuration" class="text-gray-700 text-center">Gotowy na 5 minut regeneracji?</p>
       </div>
-      <div class="p-12 flex gap-3 justify-center">
+      <div class="p-4 sm:p-6 flex flex-col sm:flex-row gap-3 justify-center">
       
         <button (click)="startPause()" [disabled]="isRunning"
                 class="px-4 py-2 rounded 
-                       bg-green-200 
+                       bg-green-200 w-full sm:w-auto
                        text-white disabled:opacity-30 
                        transition duration-300 bg-gradient-to-r from-orange-400 to-gray-500 hover:from-orange-500 hover:to-gray-600 flex items-center gap-2">
           <span class="material-icons">play_arrow</span> Rozpocznij 5-minutową przerwę
         </button>
 
         <button (click)="reset()" [disabled]="!isRunning && remainingTime === breakDuration"
-          class="px-4 py-2 rounded gradient-border flex items-center gap-2">
+          class="px-4 py-2 rounded w-full sm:w-auto gradient-border flex items-center gap-2">
           <span class="material-icons">refresh</span> Reset
         </button>
 
