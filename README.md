@@ -1,10 +1,10 @@
 Well-X: Aplikacja do Monitorowania Samopoczucia
 Well-X to nowoczesna aplikacja webowa zaprojektowana w Angularze, skupiająca się na śledzeniu codziennych aktywności, takich jak kroki i przerwy. Celem projektu jest promowanie regularnej regeneracji i zdrowego trybu życia w pracy i poza nią.
 
-🚀 Funkcje
+## 🚀 Funkcje ##
 Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
 
-# 1. Rejestrowanie Przerw (Timer)
+ 1. Rejestrowanie Przerw (Timer)
   * 5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
   
   * Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia.
