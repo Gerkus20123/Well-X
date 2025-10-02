@@ -1,59 +1,87 @@
-# AngularAppTutorial
+Well-X: Aplikacja do Monitorowania Samopoczucia
+Well-X to nowoczesna aplikacja webowa zaprojektowana w Angularze, skupiająca się na śledzeniu codziennych aktywności, takich jak kroki i przerwy. Celem projektu jest promowanie regularnej regeneracji i zdrowego trybu życia w pracy i poza nią.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+Preview aplikacji:
 
-## Development server
+![Zrzut ekranu aplikacji_1](1.png)
 
-To start a local development server, run:
+![Zrzut ekranu aplikacji_1](2.png)
+
+![Zrzut ekranu aplikacji_1](3.png)
+
+![Zrzut ekranu aplikacji_1](4.png)
+
+Link do filmiku pokazującego jak działa aplikacja:
+https://drive.google.com/file/d/1MXChrnMdLfSdiI3baKNE_zgoFhtRN6ym/view?usp=sharing
+
+## 🚀 Funkcje ##
+Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
+
+ #### 1. Rejestrowanie Przerw (Timer) ####
+ 
+  * 5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
+  
+  * Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia. Na dashboard widać, kiedy była robiona ostatnia przerwa.
+  
+  * Wizualny Feedback: Postęp timera jest śledzony wizualnie za pomocą paska postępu.
+
+#### 2. Dashboard i Statystyki ####
+
+  * Całkowite Przerwy: Wyświetla łączną liczbę zarejestrowanych przerw w danym dniu.
+  
+  * Ostatnia Przerwa: Dynamicznie oblicza i wyświetla, ile minut temu rozpoczęła się ostatnia przerwa. Dane te są odświeżane co minutę.
+  
+  * Kroki Dzisiaj: Wyświetla aktualny cel kroków. (Wymaga integracji z komponentem aktualizującym kroki - w przyszłości zamierzam dopracować).
+
+#### 3. Trwałe Przechowywanie Danych ####
+
+  * Użycie LocalStorage: Wszystkie dane o aktywności (DailyActivity) są przechowywane w pamięci przeglądarki (localStorage), zapewniając ich trwałość między sesjami. W przszłości zamierzam wprowadzić funkconalność logowania i rejestracji by takie danie były zależny od użytkownika zalogowanego w sesji.
+  
+  * Historia 5 Dni: Serwis danych inicjuje i przechowuje dane z ostatnich 5 dni + bieżący dzień.
+
+## 🛠️ Architektura Danych (WellBeingDataService) ## 
+Centralnym elementem aplikacji jest WellBeingDataService, który zarządza stanem aplikacji i komunikacją z localStorage.
+
+#### Interfejs Danych ####
+Dane są przechowywane w formacie DailyActivity (do dopracowania):
+
+export interface DailyActivity {
+  date: string;       // Data w formacie YYYY-MM-DD
+  steps: number;      // Liczba kroków
+  breaks: string[];   // Lista czasów przerw (np. ['10:30', '14:45'])
+}
+
+#### Kluczowe Metody Serwisu ####
+  *recordBreak(breakTime: string): Dodaje nowy czas przerwy do tablicy breaks dla dzisiejszego wpisu i zapisuje stan w localStorage.
+  
+  *updateSteps(newSteps: number): Aktualizuje liczbę kroków i zapisuje stan.
+  
+  *dailyActivity$: Reaktywny strumień (BehaviorSubject) do subskrypcji w celu natychmiastowej aktualizacji widoków po zmianie danych.
+
+## 🖥️ Komponent Dashboard (dashboard.component.ts) ##
+Komponent Dashboard jest odpowiedzialny za wizualizację danych aktywności w czasie rzeczywistym.
+
+#### Logika Wyświetlania Czasu ####
+Najważniejszą logiką w tym komponencie jest funkcja calculateTimeAgo:
+
+1. Pobiera czas ostatniej przerwy (lastBreakTime w formacie HH:MM).
+
+2. Oblicza różnicę w milisekundach między czasem obecnym a czasem przerwy.
+
+3. Konwertuje różnicę na minuty, wyświetlając:
+
+  * teraz (jeśli minęło < 1 minuty)
+  
+  * X minut temu (jeśli minęło < 60 minut)
+  
+  * o HH:MM (jeśli minęła ponad godzina)
+
+4. Używa setInterval(..., 60000) w ngOnInit, aby wymusić ponowne obliczenie i odświeżenie wyświetlania "X minut temu" co minutę.
+
+## 🔌 Uruchumenie ## 
+
+Aby uruchumić aplikację przejdź do katalogu głównego i w terminale wprowadź komendę:
 
 ```bash
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
