@@ -5,29 +5,32 @@ Well-X to nowoczesna aplikacja webowa zaprojektowana w Angularze, skupiająca si
 Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
 
  #### 1. Rejestrowanie Przerw (Timer) ####
+ 
   * 5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
   
-  * Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia.
+  * Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia. Na dashboard widać, kiedy była robiona ostatnia przerwa.
   
   * Wizualny Feedback: Postęp timera jest śledzony wizualnie za pomocą paska postępu.
 
-2. Dashboard i Statystyki
+#### 2. Dashboard i Statystyki ####
+
   * Całkowite Przerwy: Wyświetla łączną liczbę zarejestrowanych przerw w danym dniu.
   
   * Ostatnia Przerwa: Dynamicznie oblicza i wyświetla, ile minut temu rozpoczęła się ostatnia przerwa. Dane te są odświeżane co minutę.
   
-  * Kroki Dzisiaj: Wyświetla aktualny cel kroków. (Wymaga integracji z komponentem aktualizującym kroki).
+  * Kroki Dzisiaj: Wyświetla aktualny cel kroków. (Wymaga integracji z komponentem aktualizującym kroki - w przyszłości zamierzam dopracować).
 
-3. Trwałe Przechowywanie Danych
-  * Użycie LocalStorage: Wszystkie dane o aktywności (DailyActivity) są przechowywane w pamięci przeglądarki (localStorage), zapewniając ich trwałość między sesjami.
+#### 3. Trwałe Przechowywanie Danych ####
+
+  * Użycie LocalStorage: Wszystkie dane o aktywności (DailyActivity) są przechowywane w pamięci przeglądarki (localStorage), zapewniając ich trwałość między sesjami. W przszłości zamierzam wprowadzić funkconalność logowania i rejestracji by takie danie były zależny od użytkownika zalogowanego w sesji.
   
   * Historia 5 Dni: Serwis danych inicjuje i przechowuje dane z ostatnich 5 dni + bieżący dzień.
 
 ## 🛠️ Architektura Danych (WellBeingDataService) ## 
 Centralnym elementem aplikacji jest WellBeingDataService, który zarządza stanem aplikacji i komunikacją z localStorage.
 
-Interfejs Danych
-Dane są przechowywane w formacie DailyActivity:
+#### Interfejs Danych ####
+Dane są przechowywane w formacie DailyActivity (do dopracowania):
 
 export interface DailyActivity {
   date: string;       // Data w formacie YYYY-MM-DD
@@ -35,7 +38,7 @@ export interface DailyActivity {
   breaks: string[];   // Lista czasów przerw (np. ['10:30', '14:45'])
 }
 
-Kluczowe Metody Serwisu
+#### Kluczowe Metody Serwisu ####
   *recordBreak(breakTime: string): Dodaje nowy czas przerwy do tablicy breaks dla dzisiejszego wpisu i zapisuje stan w localStorage.
   
   *updateSteps(newSteps: number): Aktualizuje liczbę kroków i zapisuje stan.
@@ -45,7 +48,7 @@ Kluczowe Metody Serwisu
 ## 🖥️ Komponent Dashboard (dashboard.component.ts) ##
 Komponent Dashboard jest odpowiedzialny za wizualizację danych aktywności w czasie rzeczywistym.
 
-Logika Wyświetlania Czasu
+#### Logika Wyświetlania Czasu ####
 Najważniejszą logiką w tym komponencie jest funkcja calculateTimeAgo:
 
 1. Pobiera czas ostatniej przerwy (lastBreakTime w formacie HH:MM).
@@ -62,10 +65,9 @@ Najważniejszą logiką w tym komponencie jest funkcja calculateTimeAgo:
 
 4. Używa setInterval(..., 60000) w ngOnInit, aby wymusić ponowne obliczenie i odświeżenie wyświetlania "X minut temu" co minutę.
 
-##🔌 Użycie ##
-Aby aplikacja działała poprawnie:
-  1. Upewnij się, że WellBeingDataService jest dostarczony w głównym module (już jest ustawiony jako providedIn: 'root').
-  
-  2. Subskrybuj dailyActivity$ w komponentach, które muszą reagować na zmiany danych (np. DashboardComponent).
-  
-  3. Komponenty modyfikujące dane (np. TimerComponent) muszą wywoływać odpowiednie metody (recordBreak, updateSteps) w WellBeingDataService.
+##🔌 Uruchumenie ##
+Aby uruchumić aplikację przejdź do katalogu głównego i w terminale wprowadź komendę:
+
+```bash
+ng serve
+```
