@@ -5,23 +5,23 @@ Well-X to nowoczesna aplikacja webowa zaprojektowana w Angularze, skupiająca si
 Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
 
 1. Rejestrowanie Przerw (Timer)
-5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
-
-* Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia.
-
-* Wizualny Feedback: Postęp timera jest śledzony wizualnie za pomocą paska postępu.
+  * 5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
+  
+  * Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia.
+  
+  * Wizualny Feedback: Postęp timera jest śledzony wizualnie za pomocą paska postępu.
 
 2. Dashboard i Statystyki
-Całkowite Przerwy: Wyświetla łączną liczbę zarejestrowanych przerw w danym dniu.
-
-* Ostatnia Przerwa: Dynamicznie oblicza i wyświetla, ile minut temu rozpoczęła się ostatnia przerwa. Dane te są odświeżane co minutę.
-
-* Kroki Dzisiaj: Wyświetla aktualny cel kroków. (Wymaga integracji z komponentem aktualizującym kroki).
+  * Całkowite Przerwy: Wyświetla łączną liczbę zarejestrowanych przerw w danym dniu.
+  
+  * Ostatnia Przerwa: Dynamicznie oblicza i wyświetla, ile minut temu rozpoczęła się ostatnia przerwa. Dane te są odświeżane co minutę.
+  
+  * Kroki Dzisiaj: Wyświetla aktualny cel kroków. (Wymaga integracji z komponentem aktualizującym kroki).
 
 3. Trwałe Przechowywanie Danych
-* Użycie LocalStorage: Wszystkie dane o aktywności (DailyActivity) są przechowywane w pamięci przeglądarki (localStorage), zapewniając ich trwałość między sesjami.
-
-* Historia 5 Dni: Serwis danych inicjuje i przechowuje dane z ostatnich 5 dni + bieżący dzień.
+  * Użycie LocalStorage: Wszystkie dane o aktywności (DailyActivity) są przechowywane w pamięci przeglądarki (localStorage), zapewniając ich trwałość między sesjami.
+  
+  * Historia 5 Dni: Serwis danych inicjuje i przechowuje dane z ostatnich 5 dni + bieżący dzień.
 
 🛠️ Architektura Danych (WellBeingDataService)
 Centralnym elementem aplikacji jest WellBeingDataService, który zarządza stanem aplikacji i komunikacją z localStorage.
@@ -36,11 +36,11 @@ export interface DailyActivity {
 }
 
 Kluczowe Metody Serwisu
-*recordBreak(breakTime: string): Dodaje nowy czas przerwy do tablicy breaks dla dzisiejszego wpisu i zapisuje stan w localStorage.
-
-*updateSteps(newSteps: number): Aktualizuje liczbę kroków i zapisuje stan.
-
-*dailyActivity$: Reaktywny strumień (BehaviorSubject) do subskrypcji w celu natychmiastowej aktualizacji widoków po zmianie danych.
+  *recordBreak(breakTime: string): Dodaje nowy czas przerwy do tablicy breaks dla dzisiejszego wpisu i zapisuje stan w localStorage.
+  
+  *updateSteps(newSteps: number): Aktualizuje liczbę kroków i zapisuje stan.
+  
+  *dailyActivity$: Reaktywny strumień (BehaviorSubject) do subskrypcji w celu natychmiastowej aktualizacji widoków po zmianie danych.
 
 🖥️ Komponent Dashboard (dashboard.component.ts)
 Komponent Dashboard jest odpowiedzialny za wizualizację danych aktywności w czasie rzeczywistym.
@@ -54,18 +54,18 @@ Najważniejszą logiką w tym komponencie jest funkcja calculateTimeAgo:
 
 3. Konwertuje różnicę na minuty, wyświetlając:
 
-* teraz (jeśli minęło < 1 minuty)
-
-* X minut temu (jeśli minęło < 60 minut)
-
-*o HH:MM (jeśli minęła ponad godzina)
+  * teraz (jeśli minęło < 1 minuty)
+  
+  * X minut temu (jeśli minęło < 60 minut)
+  
+  * o HH:MM (jeśli minęła ponad godzina)
 
 4. Używa setInterval(..., 60000) w ngOnInit, aby wymusić ponowne obliczenie i odświeżenie wyświetlania "X minut temu" co minutę.
 
 🔌 Użycie
 Aby aplikacja działała poprawnie:
-1. Upewnij się, że WellBeingDataService jest dostarczony w głównym module (już jest ustawiony jako providedIn: 'root').
-
-2. Subskrybuj dailyActivity$ w komponentach, które muszą reagować na zmiany danych (np. DashboardComponent).
-
-3. Komponenty modyfikujące dane (np. TimerComponent) muszą wywoływać odpowiednie metody (recordBreak, updateSteps) w WellBeingDataService.
+  1. Upewnij się, że WellBeingDataService jest dostarczony w głównym module (już jest ustawiony jako providedIn: 'root').
+  
+  2. Subskrybuj dailyActivity$ w komponentach, które muszą reagować na zmiany danych (np. DashboardComponent).
+  
+  3. Komponenty modyfikujące dane (np. TimerComponent) muszą wywoływać odpowiednie metody (recordBreak, updateSteps) w WellBeingDataService.
