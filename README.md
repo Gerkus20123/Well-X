@@ -1,59 +1,71 @@
-# AngularAppTutorial
+Well-X: Aplikacja do Monitorowania Samopoczucia
+Well-X to nowoczesna aplikacja webowa zaprojektowana w Angularze, skupiająca się na śledzeniu codziennych aktywności, takich jak kroki i przerwy. Celem projektu jest promowanie regularnej regeneracji i zdrowego trybu życia w pracy i poza nią.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+🚀 Funkcje
+Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
 
-## Development server
+1. Rejestrowanie Przerw (Timer)
+5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
 
-To start a local development server, run:
+* Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia.
 
-```bash
-ng serve
-```
+* Wizualny Feedback: Postęp timera jest śledzony wizualnie za pomocą paska postępu.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+2. Dashboard i Statystyki
+Całkowite Przerwy: Wyświetla łączną liczbę zarejestrowanych przerw w danym dniu.
 
-## Code scaffolding
+* Ostatnia Przerwa: Dynamicznie oblicza i wyświetla, ile minut temu rozpoczęła się ostatnia przerwa. Dane te są odświeżane co minutę.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* Kroki Dzisiaj: Wyświetla aktualny cel kroków. (Wymaga integracji z komponentem aktualizującym kroki).
 
-```bash
-ng generate component component-name
-```
+3. Trwałe Przechowywanie Danych
+* Użycie LocalStorage: Wszystkie dane o aktywności (DailyActivity) są przechowywane w pamięci przeglądarki (localStorage), zapewniając ich trwałość między sesjami.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+* Historia 5 Dni: Serwis danych inicjuje i przechowuje dane z ostatnich 5 dni + bieżący dzień.
 
-```bash
-ng generate --help
-```
+🛠️ Architektura Danych (WellBeingDataService)
+Centralnym elementem aplikacji jest WellBeingDataService, który zarządza stanem aplikacji i komunikacją z localStorage.
 
-## Building
+Interfejs Danych
+Dane są przechowywane w formacie DailyActivity:
 
-To build the project run:
+export interface DailyActivity {
+  date: string;       // Data w formacie YYYY-MM-DD
+  steps: number;      // Liczba kroków
+  breaks: string[];   // Lista czasów przerw (np. ['10:30', '14:45'])
+}
 
-```bash
-ng build
-```
+Kluczowe Metody Serwisu
+*recordBreak(breakTime: string): Dodaje nowy czas przerwy do tablicy breaks dla dzisiejszego wpisu i zapisuje stan w localStorage.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+*updateSteps(newSteps: number): Aktualizuje liczbę kroków i zapisuje stan.
 
-## Running unit tests
+*dailyActivity$: Reaktywny strumień (BehaviorSubject) do subskrypcji w celu natychmiastowej aktualizacji widoków po zmianie danych.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+🖥️ Komponent Dashboard (dashboard.component.ts)
+Komponent Dashboard jest odpowiedzialny za wizualizację danych aktywności w czasie rzeczywistym.
 
-```bash
-ng test
-```
+Logika Wyświetlania Czasu
+Najważniejszą logiką w tym komponencie jest funkcja calculateTimeAgo:
 
-## Running end-to-end tests
+1. Pobiera czas ostatniej przerwy (lastBreakTime w formacie HH:MM).
 
-For end-to-end (e2e) testing, run:
+2. Oblicza różnicę w milisekundach między czasem obecnym a czasem przerwy.
 
-```bash
-ng e2e
-```
+3. Konwertuje różnicę na minuty, wyświetlając:
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+* teraz (jeśli minęło < 1 minuty)
 
-## Additional Resources
+* X minut temu (jeśli minęło < 60 minut)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+*o HH:MM (jeśli minęła ponad godzina)
+
+4. Używa setInterval(..., 60000) w ngOnInit, aby wymusić ponowne obliczenie i odświeżenie wyświetlania "X minut temu" co minutę.
+
+🔌 Użycie
+Aby aplikacja działała poprawnie:
+1. Upewnij się, że WellBeingDataService jest dostarczony w głównym module (już jest ustawiony jako providedIn: 'root').
+
+2. Subskrybuj dailyActivity$ w komponentach, które muszą reagować na zmiany danych (np. DashboardComponent).
+
+3. Komponenty modyfikujące dane (np. TimerComponent) muszą wywoływać odpowiednie metody (recordBreak, updateSteps) w WellBeingDataService.
