@@ -4,7 +4,7 @@ Well-X to nowoczesna aplikacja webowa zaprojektowana w Angularze, skupiająca si
 ## 🚀 Funkcje ##
 Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
 
- 1. Rejestrowanie Przerw (Timer)
+ #### 1. Rejestrowanie Przerw (Timer) ####
   * 5-minutowy Timer: Komponent app-timer umożliwia rozpoczęcie 5-minutowej przerwy.
   
   * Automatyczny Zapis: Po zakończeniu timera, przerwa jest automatycznie rejestrowana wraz z dokładnym czasem (HH:MM) jej rozpoczęcia.
@@ -23,7 +23,7 @@ Aplikacja Well-X oferuje następujące kluczowe funkcjonalności:
   
   * Historia 5 Dni: Serwis danych inicjuje i przechowuje dane z ostatnich 5 dni + bieżący dzień.
 
-🛠️ Architektura Danych (WellBeingDataService)
+## 🛠️ Architektura Danych (WellBeingDataService) ## 
 Centralnym elementem aplikacji jest WellBeingDataService, który zarządza stanem aplikacji i komunikacją z localStorage.
 
 Interfejs Danych
@@ -42,7 +42,7 @@ Kluczowe Metody Serwisu
   
   *dailyActivity$: Reaktywny strumień (BehaviorSubject) do subskrypcji w celu natychmiastowej aktualizacji widoków po zmianie danych.
 
-🖥️ Komponent Dashboard (dashboard.component.ts)
+## 🖥️ Komponent Dashboard (dashboard.component.ts) ##
 Komponent Dashboard jest odpowiedzialny za wizualizację danych aktywności w czasie rzeczywistym.
 
 Logika Wyświetlania Czasu
@@ -62,7 +62,7 @@ Najważniejszą logiką w tym komponencie jest funkcja calculateTimeAgo:
 
 4. Używa setInterval(..., 60000) w ngOnInit, aby wymusić ponowne obliczenie i odświeżenie wyświetlania "X minut temu" co minutę.
 
-🔌 Użycie
+##🔌 Użycie ##
 Aby aplikacja działała poprawnie:
   1. Upewnij się, że WellBeingDataService jest dostarczony w głównym module (już jest ustawiony jako providedIn: 'root').
   
