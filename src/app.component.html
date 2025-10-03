@@ -1,0 +1,43 @@
+<div class="min-h-screen bg-gray-200 flex">
+  <!-- Side nav -->
+  <aside
+    class="fixed inset-y-0 left-0 z-20 w-60 transform bg-white border-r border-gray-200 p-2 transition-transform duration-200"
+    [class.-translate-x-full]="!sidenavOpen"
+    [attr.role]="'navigation'"
+    (mouseleave)="sidenavOpen = false"
+  >
+    <div class="font-bold text-xl text-gray-700 bg-gray-100 h-14 flex items-center justify-center border-b">Menu</div>
+    <nav class="mt-2">
+      <a
+        *ngFor="let item of menuItems"
+        [routerLink]="item.route"
+        routerLinkActive="bg-gray-200 text-gray-700 font-bold"
+        class="flex items-center gap-3 px-3 py-2 my-1 rounded-md transition hover:bg-gray-100"
+      >
+        <span class="material-icons">{{item.icon}}</span>
+        <span>{{item.label}}</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main content wrapper -->
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Top bar -->
+    <header class="bg-gray-900 text-white sticky top-0 z-20 h-16 shadow-lg flex items-center px-4">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        (click)="toggleSidenav()"
+        class="p-2 rounded hover:bg-gray-600 transition"
+      >
+        <span class="material-icons">menu</span>
+      </button>
+      <img src="/app_logo.png" alt="Logo aplikacji" class="app-logo">
+    </header>
+
+    <!-- Main content -->
+    <main class="p-12 md:p-20">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
